@@ -27,16 +27,11 @@ getDesignAircrafts(){
 
 getDevelopmentAircrafts(){
  
-  console.log("getDevelopment marche");
+  console.log("getDevelopment marche!!!!!!!!!");
 };
 
 
-   //en résumé, le composant parent écoute les événements de l'enfant
-//et lorrqu'il se produit qqch la méthode ci dessous est appelé
-onActionEvent($event : any) {
-  if($event == "ALL_AIRCRAFTS") this.getAllAircrafts();
- 
-}
+
 
 
 }
