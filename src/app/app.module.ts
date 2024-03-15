@@ -7,6 +7,11 @@ import { AircraftsComponent } from './components/aircrafts.component';
 import { NotFoundComponent } from './notFound/not-found.component';
 import { AircraftsNavbarComponent } from './components/aircrafts/aircrafts-navbar/aircrafts-navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AircraftsReducer } from './ngrx/aircrafts.reducer';
+import { AircraftsEffects } from './ngrx/aircrafts.effects';
 
 
 @NgModule({
@@ -20,7 +25,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule, 
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+   StoreModule.forRoot({airbusState: AircraftsReducer}), 
+   EffectsModule.forRoot([AircraftsEffects]),
+   StoreDevtoolsModule.instrument()
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
