@@ -32,7 +32,10 @@ export class AircraftService {
     return this.http.get<Aircraft> (environment.host + "/aircrafts" + id);
   }
 
+public getSearchAircraft(value: any) : Observable<Aircraft[]>{
+  return this.http.get<Aircraft[]> (environment.host + `/aircrafts?prog_like=`+ value)
 
+}
 
 }
   

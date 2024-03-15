@@ -3,7 +3,8 @@ import { Aircraft } from 'src/app/model/aircraft';
 import { AircraftService } from 'src/app/services/aircraft.service';
 import { Observable, catchError, map, of, startWith } from 'rxjs';
 import { AppDataState, DataStateEnum } from 'src/app/enum';
-import { Laboratory } from 'src/app/laboratory';
+import { AircraftsActionsTypes, ActionEvent } from '../events';
+
 
 @Component({
   selector: 'app-aircrafts',
@@ -11,18 +12,15 @@ import { Laboratory } from 'src/app/laboratory';
   styleUrls: ['./aircrafts.component.css']
 })
 export class AircraftsComponent implements OnInit {
-//aircrafts : Aircraft[] | null = null; //soit un tableau d'avions soit null   //Option 1
+
 aircrafts$:Observable<AppDataState<Aircraft[]>> | null = null; 
-  //le cigle $ est une convention d'écriture pour indiquer qu'il s'agit d'un observable
-  //Option 3 : aircraft est de type observable de structure de donnée AppDataState constituée de 3 éléments facultatifs
-  //le type générique ici sera dans notre cas une liste d'avions
-  //cette étape est indispensable afin de permettre à pipe de renvoyer le même type de donnée pour les 3 cas d'utilisation s,m et c
+  
 readonly dataStateEnum = DataStateEnum ;
 
- 
-// error = null;
 
-  constructor(private aircraftService: AircraftService, private labo : Laboratory) { }
+  constructor(private aircraftService: AircraftService) {
+    
+   }
 
   ngOnInit(): void { 
     //this.labo.tests();
@@ -54,67 +52,29 @@ getDesignedAircraft(){
     )
     }
 
-//en résumé, le composant parent écoute les événements de l'enfant
-//et lorrqu'il se produit qqch la méthode ci dessous est appelé
-onActionEvent($event : any) {
-  if($event == "ALL_AIRCRAFTS") this.getAllAircrafts();
+//le composant parent écoute les événements de l'enfant
+//et lorsqu'il se produit qqch la méthode ci dessous est appelé
+onActionEvent($actionEvent : ActionEvent){ { //qq soit l'event, on le gère ici
+  switch($actionEvent.type){
+  case AircraftsActionsTypes.GET_ALL_AIRCRAFTS :
+  this.getAllAircrafts();
+  break;
+
+  case AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS : 
+  this.search($actionEvent.payload);
+  break;
+}
+}
 }
 
-
-  //OPTION 2 - LE SOUCI ICI C'EST QU'ON A AUCUN MOYEN DE RECUPERER LES ERREURS !
-  /*getAllAircrafts() {
-    //Option2 : la méthode du service renvoi un Observable
-    this.aircrafts$ = this.aircraftService.getAircrafts(); //delors il faut bien faire un subscribe puisqu'il n'est plus sollicité ici
-      //en effet, l'appel sera fait côté html en précisant (pipe) "| async" toujours pour agir lorsque des données arrivent
-    }*/
- 
-
-  /*getDesignedAircraft() {
-    this.aircrafts$ = this.aircraftService.getAircrafts();
-    };
-  
-
-  
-  getDevelopmentAircraft() {
-    this.aircrafts$ = this.aircraftService.getAircrafts();
-    };
-  
-  getAircraftByMsn() {
-    this.aircrafts$ = this.aircraftService.getAircrafts();
-    };
-
-  }
-  /* OPTION 1
-  getAllAircrafts() {
-    this.aircraftService.getAircrafts().subscribe({
-      next : (data) => this.aircrafts = data,
-      error : (err) => this.error = err.message,
-      complete : () => this.error = null
-    })
+search(value: any){
+  this.aircrafts$ = this.aircraftService.getSearchAircraft(value).pipe(
+    map(data => ({dataState : DataStateEnum.LOADED, data : data})), 
+    startWith({dataState : DataStateEnum.LOADING}), 
+    catchError(err => of({dataState : DataStateEnum.ERROR, errorMessage : err.message})) 
+    
+  )
+  console.log("hello");
   }
 
-  getDesignedAircraft() {
-    this.aircraftService.getAircrafts().subscribe({
-      next : (data) => this.aircrafts = data,
-      error : (err) => this.error = err.message,
-      complete : () => this.error = null
-    })*/
-  }
-
-  
-  /*getDevelopmentAircraft() {
-    this.aircraftService.getAircrafts().subscribe({
-      next : (data) => this.aircrafts = data,
-      error : (err) => this.error = err.message,
-      complete : () => this.error = null
-    })
-  }
-  getAircraftByMsn() {
-    this.aircraftService.getAircrafts().subscribe({
-      next : (data) => this.aircrafts = data,
-      error : (err) => this.error = err.message,
-      complete : () => this.error = null
-    })*/
-
-
-
+}

@@ -5,6 +5,14 @@
             <button class="btn btn-outline-info m2" (click)="getDesignAircrafts()">Avions en étude</button>
             <button class="btn btn-outline-info m2" (click)="getDevelopmentAircrafts()">Avions en construction </button>
         </li>
+        <li>
+            <form [formGroup]="myForm" (ngSubmit)="onSearch(myForm)" >
+                <div class="form-group">
+                    <input type="text" formControlName="searchValue" id="search" /> 
+                    <button type="submit" class="btn btn-outline-info m2">Search</button>
+                </div>
+            </form>
+        </li>
     </ul>
 
 </nav>
