@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { AircraftsActionsTypes } from 'src/app/events';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-aircrafts-navbar',
@@ -15,7 +16,7 @@ myForm=this.formBuilder.group({
   searchValue: [""]
 })
 
-  constructor(private formBuilder : FormBuilder) {
+  constructor(private eventService: EventService, private formBuilder : FormBuilder) {
     
    }
 
@@ -24,7 +25,8 @@ myForm=this.formBuilder.group({
 
 
 getAllAircrafts() {
-this.eventEmitter.emit({type : AircraftsActionsTypes.GET_ALL_AIRCRAFTS , payload : null});
+  this.eventService.publishEvent({type : AircraftsActionsTypes.GET_ALL_AIRCRAFTS, payload : null});
+//this.eventEmitter.emit({type : AircraftsActionsTypes.GET_ALL_AIRCRAFTS , payload : null});
 
   console.log("getAll marche");
 };
@@ -41,9 +43,8 @@ getDesignAircrafts(){
 
 getDevelopmentAircrafts(){
  
-  console.log("getDevelopment marche!!!!!!!!!");
+  console.log("getDevelopment marche!");
 };
-
 
 
 }

@@ -4,6 +4,7 @@ import { AircraftService } from 'src/app/services/aircraft.service';
 import { Observable, catchError, map, of, startWith } from 'rxjs';
 import { AppDataState, DataStateEnum } from 'src/app/enum';
 import { AircraftsActionsTypes, ActionEvent } from '../events';
+import { EventService } from '../services/event.service';
 
 
 @Component({
@@ -18,12 +19,12 @@ aircrafts$:Observable<AppDataState<Aircraft[]>> | null = null;
 readonly dataStateEnum = DataStateEnum ;
 
 
-  constructor(private aircraftService: AircraftService) {
-    
-   }
+  constructor(private aircraftService: AircraftService, private eventService: EventService) { }
 
-  ngOnInit(): void { 
-    //this.labo.tests();
+  ngOnInit(): void {  //au boot du composant, il souscrit ici au service et dès qu'il reçoit un événement de type ActionEvent
+   this.eventService.eventSubjectObservable.subscribe((actionEvent : ActionEvent) => {
+    this.onActionEvent(actionEvent); //dès qu'une action arrive, le cosrrespond peut réagir ou pas
+   })
   }
 
 //OPTION 3 : méthode Pipe avec un ensemble d'opérateur + gestion des tets du chargement des données
