@@ -27,11 +27,34 @@ export function AircraftsReducer(state : AircraftsState = initState, action: Act
         case AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS_ERROR:
             return {...state, dataState: AircraftsStateEnum.ERROR, errorMessage : (<AircraftsActions> action).payload };
 
+        //GET DEVELOPMENT AIRCRAFTS
+        case AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS:
+            return {...state, dataState: AircraftsStateEnum.LOADING };
 
+        case AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS_SUCCESS:
+            return {...state, dataState: AircraftsStateEnum.LOADED, aircrafts : (<AircraftsActions> action).payload };
+     
+        case AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS_ERROR:
+            return {...state, dataState: AircraftsStateEnum.ERROR, errorMessage : (<AircraftsActions> action).payload };
 
+        //GET SEARCHED AIRCRAFTS
+        case AircraftsActionsTypes.GET_SEARCHED_AIRCRAFTS:
+            return {...state, dataState: AircraftsStateEnum.LOADING };
+
+        case AircraftsActionsTypes.GET_SEARCHED_AIRCRAFTS_SUCCESS:
+            return {...state, dataState: AircraftsStateEnum.LOADED, aircrafts : (<AircraftsActions> action).payload };
+     
+        case AircraftsActionsTypes.GET_SEARCHED_AIRCRAFTS_ERROR:
+            return {...state, dataState: AircraftsStateEnum.ERROR, errorMessage : (<AircraftsActions> action).payload };
+
+       
+       
         default : 
             return {...state}
 
 
     }
 } //en bref : le reducer reçoit state actuel + action dispatchée dasn loe store et retourne le new state
+
+
+
