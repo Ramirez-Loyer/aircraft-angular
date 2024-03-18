@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { AircraftsActionsTypes } from 'src/app/events';
-import { GetAllAircraftsAction } from 'src/app/ngrx/aircrafts.action';
+import { GetAllAircraftsAction, GetDesignedAircraftsAction, GetDevelopmentAircraftsAction, GetSearchedAircraftsAction } from 'src/app/ngrx/aircrafts.action';
 import { EventService } from 'src/app/services/event.service';
 import { Store } from '@ngrx/store';
 
@@ -29,15 +29,17 @@ getAllAircrafts(){
 
 
 onSearch(value : any){
-  this.store.dispatch({type : AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS , payload : value.value.searchValue});
+  this.store.dispatch(new GetSearchedAircraftsAction({}));
 }
 
 getDesignAircrafts(){
+  this.store.dispatch(new GetDesignedAircraftsAction({}));
   console.log("getDesign marche");
 };
 
 
 getDevelopmentAircrafts(){
+  this.store.dispatch(new GetDevelopmentAircraftsAction({}));
   console.log("getDevelopment marche!");
 };
 

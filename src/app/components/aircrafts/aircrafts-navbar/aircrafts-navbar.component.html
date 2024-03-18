@@ -1,9 +1,9 @@
 <nav class = "navbar navbar-expand-sm">
     <ul class="navbar navbara-nav">
         <li>
-            <button class="btn btn-outline-info m2" (click)="getAllAircrafts()">Tous les avions</button>
-            <button class="btn btn-outline-info m2" (click)="getDesignAircrafts()">Avions en étude</button>
-            <button class="btn btn-outline-info m2" (click)="getDevelopmentAircrafts()">Avions en construction </button>
+            <button class="btn btn-outline-info m2 btn-sm" (click)="getAllAircrafts()">Tous les avions</button>
+            <button class="btn btn-outline-info m2 btn-sm" (click)="getDesignAircrafts()">Avions en étude</button>
+            <button class="btn btn-outline-info m2 btn-sm" (click)="getDevelopmentAircrafts()">Avions en construction </button>
         </li>
         <li>
             <form [formGroup]="myForm" (ngSubmit)="onSearch(myForm)" >
