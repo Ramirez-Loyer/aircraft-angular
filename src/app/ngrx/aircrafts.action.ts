@@ -10,7 +10,7 @@ GET_ALL_AIRCRAFTS_SUCCESS = "[Aircrafts] Get AllAircrafts Success",
 GET_ALL_AIRCRAFTS_ERROR = "[Aircrafts] Get AllAircrafts Error",
 GET_DESIGNED_AIRCRAFTS = "[Aircrafts] Get Designed Aircrafts",    
 GET_DESIGNED_AIRCRAFTS_SUCCESS = "[Aircrafts] Get Designed Aircrafts Success", 
-GET_DESIGNED_AIRCRAFTS_ERROR = "[Aircrafts] DGet Designed aircrafts Error",
+GET_DESIGNED_AIRCRAFTS_ERROR = "[Aircrafts] Get Designed aircrafts Error",
 }
 
 
@@ -31,17 +31,17 @@ export class GetAllAircraftsActionError implements Action {
     }
 
 //GetDesigned aircrafts
-export class getDesignedAircraftAction implements Action {
+export class GetDesignedAircraftsAction implements Action {
     type : AircraftsActionsTypes = AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS;
     constructor(public payload: any) {}
     }
 
-export class getDesignedAircraftSuccess implements Action {
+export class GetDesignedAircraftsActionSuccess implements Action {
     type : AircraftsActionsTypes = AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS_SUCCESS;
     constructor(public payload: Aircraft[]) {}
     }
 
-export class getDesignedAircraftError implements Action {
+export class GetDesignedAircraftsActionError implements Action {
     type : AircraftsActionsTypes = AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS_ERROR;
     constructor(public payload: string) {}  //message d'erreur 
     }
@@ -50,4 +50,4 @@ export class getDesignedAircraftError implements Action {
 
 
 export type AircraftsActions = GetAllAircraftsAction | GetAllAircraftsActionSuccess | GetAllAircraftsActionError | 
-GetAllAircraftsAction | GetAllAircraftsActionSuccess| GetAllAircraftsActionError;
+GetDesignedAircraftsAction  | GetDesignedAircraftsActionSuccess| GetDesignedAircraftsActionError;

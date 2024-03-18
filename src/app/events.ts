@@ -6,6 +6,7 @@ export interface ActionEvent {
 
 export enum AircraftsActionsTypes {
     GET_ALL_AIRCRAFTS = "[Aircrafts] Get All Aircrafts",
+    
     GET_DESIGNED_AIRCRAFTS = "[Aircrafts] Get Designed Aircrafts",
     
     GET_DESIGNED_AIRCRAFTS_SUCCESS = "[Aircrafts] Get Designed Aircrafts Success", 
