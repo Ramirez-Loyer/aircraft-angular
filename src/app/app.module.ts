@@ -26,9 +26,9 @@ import { AircraftsEffects } from './ngrx/aircrafts.effects';
     HttpClientModule, 
     FormsModule, 
     ReactiveFormsModule, 
-   StoreModule.forRoot({airbusState: AircraftsReducer}), 
-   EffectsModule.forRoot([AircraftsEffects]),
-   StoreDevtoolsModule.instrument()
+    StoreModule.forRoot({airbusState: AircraftsReducer}), 
+    EffectsModule.forRoot([AircraftsEffects]),
+    StoreDevtoolsModule.instrument()
     
   ],
   providers: [],

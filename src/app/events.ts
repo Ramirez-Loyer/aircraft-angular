@@ -9,4 +9,5 @@ export enum AircraftsActionsTypes {
     GET_DESIGNED_AIRCRAFTS = "[Aircrafts] Get Designed Aircrafts",
     GET_DEVELOPMENT_AIRCRAFTS = "[Aircrafts] Get Development Aircrafts",
     GET_SEARCH_AIRCRAFTS = "[Aircrafts] Get Search Aircrafts"
+    
 }

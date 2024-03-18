@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { AircraftsActionsTypes } from 'src/app/events';
+import { GetAllAircraftsAction } from 'src/app/ngrx/aircrafts.action';
 import { EventService } from 'src/app/services/event.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-aircrafts-navbar',
@@ -9,40 +11,33 @@ import { EventService } from 'src/app/services/event.service';
   styleUrls: ['./aircrafts-navbar.component.css']
 })
 export class AircraftsNavbarComponent implements OnInit {
-@Output() eventEmitter : EventEmitter<any> = new EventEmitter();
-  //Il s'agit de provoquer un événement de sortie sur notre composant
-
-myForm=this.formBuilder.group({
-  searchValue: [""]
-})
-
-  constructor(private eventService: EventService, private formBuilder : FormBuilder) {
-    
-   }
-
-  ngOnInit(): void {
-  }
 
 
-getAllAircrafts() {
-  this.eventService.publishEvent({type : AircraftsActionsTypes.GET_ALL_AIRCRAFTS, payload : null});
-//this.eventEmitter.emit({type : AircraftsActionsTypes.GET_ALL_AIRCRAFTS , payload : null});
+  myForm = this.formBuilder.group({
+    searchValue: [""]
+  })
 
-  console.log("getAll marche");
-};
+constructor (private store: Store<any>, private formBuilder : FormBuilder) { }
+
+ngOnInit(): void {
+ 
+}
+
+getAllAircrafts(){
+  this.store.dispatch(new GetAllAircraftsAction({}));
+}
+
 
 onSearch(value : any){
-  this.eventEmitter.emit({type : AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS , payload : value.value.searchValue});
-
+  this.store.dispatch({type : AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS , payload : value.value.searchValue});
 }
+
 getDesignAircrafts(){
- 
   console.log("getDesign marche");
 };
 
 
 getDevelopmentAircrafts(){
- 
   console.log("getDevelopment marche!");
 };
 

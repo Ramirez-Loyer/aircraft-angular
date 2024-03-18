@@ -5,6 +5,9 @@ import { Observable, catchError, map, of, startWith } from 'rxjs';
 import { AppDataState, DataStateEnum } from 'src/app/enum';
 import { AircraftsActionsTypes, ActionEvent } from '../events';
 import { EventService } from '../services/event.service';
+import { AircraftsState, AircraftsStateEnum } from '../ngrx/aircrafts.state';
+import { Store } from '@ngrx/store';
+
 
 
 @Component({
@@ -14,31 +17,28 @@ import { EventService } from '../services/event.service';
 })
 export class AircraftsComponent implements OnInit {
 
-aircrafts$:Observable<AppDataState<Aircraft[]>> | null = null; 
+aircraftsState$:Observable<AircraftsState> | null = null; 
   
-readonly dataStateEnum = DataStateEnum ;
+readonly aircraftsStateEnum = AircraftsStateEnum ;
 
 
-  constructor(private aircraftService: AircraftService, private eventService: EventService) { }
+  constructor(private store: Store<any>) { }
 
-  ngOnInit(): void {  //au boot du composant, il souscrit ici au service et dès qu'il reçoit un événement de type ActionEvent
-   this.eventService.eventSubjectObservable.subscribe((actionEvent : ActionEvent) => {
-    this.onActionEvent(actionEvent); //dès qu'une action arrive, le cosrrespond peut réagir ou pas
-   })
+  ngOnInit(): void { 
+   this.aircraftsState$ = this.store.pipe( map((state) => state.airbusState));
+   }
   }
 
-//OPTION 3 : méthode Pipe avec un ensemble d'opérateur + gestion des tets du chargement des données
-//du coup, on peut appliquer un ensemble d'opérateur
-getAllAircrafts(){
-this.aircrafts$ = this.aircraftService.getAircrafts().pipe(
-  map(data => ({dataState : DataStateEnum.LOADED, data : data})), //opérateur 'map' reçoit une liste d'avions et retourne une fonction avec pour paramètre un objet contenat cette liste. //Il renvoie aussi une variable state qui précise l'état du chargement ici en cours
-  startWith({dataState : DataStateEnum.LOADING}),  //dès que pipe est appelé, le premier état est spécifié ici
-  catchError(err => of({dataSatte : DataStateEnum.ERROR, errorMessage : err.message})) //là aussi on fretourne une fonction qui renvoie un Observable ici grâce à la méthode of
+
+/* getAllAircrafts(){
+this.aircraftsState$ = this.aircraftService.getAircrafts().pipe(
+  map(data => ({dataState : DataStateEnum.LOADED, data : data})), 
+  catchError(err => of({dataSatte : DataStateEnum.ERROR, errorMessage : err.message})) 
 )
 }
 
 getDesignedAircraft(){
-  this.aircrafts$ = this.aircraftService.getDesignedAircrafts().pipe(
+  this.aircraftsState$ = this.aircraftService.getDesignedAircrafts().pipe(
     map(data => ({dataState : DataStateEnum.LOADED, data : data})), 
     startWith({dataState : DataStateEnum.LOADING}), 
     catchError(err => of({dataSatte : DataStateEnum.ERROR, errorMessage : err.message})) 
@@ -46,15 +46,14 @@ getDesignedAircraft(){
   }
 
   getDevelopmentAircraft(){
-    this.aircrafts$ = this.aircraftService.getDevelopmentAircrafts().pipe(
+    this.aircraftsState$ = this.aircraftService.getDevelopmentAircrafts().pipe(
       map(data => ({dataState : DataStateEnum.LOADED, data : data})), 
       startWith({dataState : DataStateEnum.LOADING}), 
       catchError(err => of({dataSatte : DataStateEnum.ERROR, errorMessage : err.message})) 
     )
     }
 
-//le composant parent écoute les événements de l'enfant
-//et lorsqu'il se produit qqch la méthode ci dessous est appelé
+
 onActionEvent($actionEvent : ActionEvent){ { //qq soit l'event, on le gère ici
   switch($actionEvent.type){
   case AircraftsActionsTypes.GET_ALL_AIRCRAFTS :
@@ -77,5 +76,5 @@ search(value: any){
   )
   console.log("hello");
   }
+ */
 
-}
