@@ -1,8 +1,11 @@
 import {Action} from "@ngrx/store";
 import { Aircraft } from "../model/aircraft";
+import { Operation } from "../model/operation";
 
 
 export interface ActionEvent{type:AircraftsActionsTypes; payload:any}
+
+
 
 export enum AircraftsActionsTypes {
 //Action : GEt all aircrafts
@@ -32,7 +35,12 @@ GET_SEARCHED_AIRCRAFTS_ERROR = '[Aircrafts] Get Serached Aircrafts Error',
 }
 
 
+export enum OperationActionsTypes {
+    ADD_OPERATION = "[Operation] AddOne",
+    REMOVE_OPERATION = "[Operation] RemoveOne"
+}
 
+/************/
 
 export class GetAllAircraftsAction implements Action {
     type : AircraftsActionsTypes = AircraftsActionsTypes.GET_ALL_AIRCRAFTS;
@@ -98,10 +106,21 @@ export class GetSearchedAircraftsActionError implements Action {
     }
 
 
+export class AddOne implements Action {
+    type : OperationActionsTypes = OperationActionsTypes.ADD_OPERATION;
+    constructor(public payload: Operation) {}
+    }
+
+export class RemoveOne implements Action {
+    type : OperationActionsTypes = OperationActionsTypes.REMOVE_OPERATION;
+    constructor(public payload: number) {}
+    }
 
 
-
+/*********/ 
 export type AircraftsActions = GetAllAircraftsAction | GetAllAircraftsActionSuccess | GetAllAircraftsActionError | 
 GetDesignedAircraftsAction  | GetDesignedAircraftsActionSuccess| GetDesignedAircraftsActionError |
 GetDevelopmentAircraftsAction  | GetDevelopmentAircraftsActionSuccess| GetDevelopmentAircraftsActionError |
 GetSearchedAircraftsAction  | GetSearchedAircraftsActionSuccess| GetSearchedAircraftsActionError ;
+
+export type OperationsActions = AddOne | RemoveOne;

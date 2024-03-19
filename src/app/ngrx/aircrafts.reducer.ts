@@ -1,9 +1,24 @@
 import { Action } from "@ngrx/store";
-
 import { AircraftsState, AircraftsStateEnum, initState } from "./aircrafts.state";
-import { AircraftsActions, AircraftsActionsTypes } from "./aircrafts.action";
+import { AircraftsActions, AircraftsActionsTypes, OperationActionsTypes } from "./aircrafts.action";
+import { EntityAdapter, createEntityAdapter } from "@ngrx/entity";
+import { Operation } from "../model/operation";
 
-export function AircraftsReducer(state : AircraftsState = initState, action: Action) {
+export const adapter : EntityAdapter<Operation> = createEntityAdapter<Operation>({
+    //on a besoin d'un adaptateur afin de manipuler nos entités avec un certain nombre de méthodes
+    //sortComparer : sortByPriority -> il est possible d'ajouter des méthodes ici par ex pour trier
+    //sinon le trie se fait par défaut sur l'id
+});
+
+export const initialState: AircraftsState = adapter.getInitialState({
+    aircrafts : [],
+    errorMessage: "", 
+    dataState : AircraftsStateEnum.INITIAL, 
+    ids: [],
+    entities: {}
+});
+
+export function AircraftsReducer(state : AircraftsState = initialState, action: Action) : AircraftsState {
     switch(action.type){
         case AircraftsActionsTypes.GET_ALL_AIRCRAFTS:
         //console.log("loading...");
@@ -51,6 +66,12 @@ export function AircraftsReducer(state : AircraftsState = initState, action: Act
             return {...state, dataState: AircraftsStateEnum.ERROR, errorMessage : (<AircraftsActions> action).payload };
 
        
+            //GESTION OPERATIONS
+        case OperationActionsTypes.ADD_OPERATION : 
+            return adapter.addOne((<AircraftsActions> action).payload, state);
+        case OperationActionsTypes.REMOVE_OPERATION : 
+            return adapter.removeOne((<AircraftsActions> action).payload, state);
+
        
         default : 
             return {...state}
