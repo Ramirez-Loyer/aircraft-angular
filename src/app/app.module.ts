@@ -12,13 +12,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AircraftsReducer } from './ngrx/aircrafts.reducer';
 import { AircraftsEffects } from './ngrx/aircrafts.effects';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AircraftsComponent,
-    AircraftsNavbarComponent
+    AircraftsNavbarComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

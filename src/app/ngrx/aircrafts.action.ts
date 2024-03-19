@@ -1,6 +1,7 @@
 import {Action} from "@ngrx/store";
 import { Aircraft } from "../model/aircraft";
 
+
 export interface ActionEvent{type:AircraftsActionsTypes; payload:any}
 
 export enum AircraftsActionsTypes {
