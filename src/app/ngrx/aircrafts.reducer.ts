@@ -6,7 +6,7 @@ import { AircraftsActions, AircraftsActionsTypes } from "./aircrafts.action";
 export function AircraftsReducer(state : AircraftsState = initState, action: Action) {
     switch(action.type){
         case AircraftsActionsTypes.GET_ALL_AIRCRAFTS:
-        console.log("loading...");
+        //console.log("loading...");
         return {...state, dataState: AircraftsStateEnum.LOADING };
 
         case AircraftsActionsTypes.GET_ALL_AIRCRAFTS_SUCCESS: 
@@ -17,7 +17,8 @@ export function AircraftsReducer(state : AircraftsState = initState, action: Act
         case AircraftsActionsTypes.GET_ALL_AIRCRAFTS_ERROR: 
             return {...state, dataState: AircraftsStateEnum.ERROR, errorMessage: (<AircraftsActions> action).payload}
 
-        //GET DESIGNED AIRCRAFTS
+       
+            //GET DESIGNED AIRCRAFTS
         case AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS:
             return {...state, dataState: AircraftsStateEnum.LOADING };
 
@@ -27,7 +28,8 @@ export function AircraftsReducer(state : AircraftsState = initState, action: Act
         case AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS_ERROR:
             return {...state, dataState: AircraftsStateEnum.ERROR, errorMessage : (<AircraftsActions> action).payload };
 
-        //GET DEVELOPMENT AIRCRAFTS
+       
+            //GET DEVELOPMENT AIRCRAFTS
         case AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS:
             return {...state, dataState: AircraftsStateEnum.LOADING };
 
@@ -37,9 +39,10 @@ export function AircraftsReducer(state : AircraftsState = initState, action: Act
         case AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS_ERROR:
             return {...state, dataState: AircraftsStateEnum.ERROR, errorMessage : (<AircraftsActions> action).payload };
 
-        //GET SEARCHED AIRCRAFTS
+        
+            //GET SEARCHED AIRCRAFTS
         case AircraftsActionsTypes.GET_SEARCHED_AIRCRAFTS:
-            return {...state, dataState: AircraftsStateEnum.LOADING };
+            return {...state, dataState: AircraftsStateEnum.LOADING, aircrafts : (<AircraftsActions> action).payload };
 
         case AircraftsActionsTypes.GET_SEARCHED_AIRCRAFTS_SUCCESS:
             return {...state, dataState: AircraftsStateEnum.LOADED, aircrafts : (<AircraftsActions> action).payload };

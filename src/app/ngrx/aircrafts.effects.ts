@@ -44,7 +44,7 @@ export class AircraftsEffects {
         () => this.effectActions.pipe(
             ofType(AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS),
             mergeMap((action) => {
-                return this.aircraftService.getDesignedAircrafts().pipe(
+                return this.aircraftService.getDevelopmentAircrafts().pipe(
                     map((aircrafts) => new GetDevelopmentAircraftsActionSuccess(aircrafts)),
                     catchError((err) => of(new GetDevelopmentAircraftsActionError(err.message)))
                 )
@@ -54,13 +54,13 @@ export class AircraftsEffects {
 
     getSearchedAircraftsEffect: Observable<Action> = createEffect(
         () => this.effectActions.pipe(
-            ofType(AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS),
-            mergeMap((action) => {
-                return this.aircraftService.getDesignedAircrafts().pipe(
+            ofType(AircraftsActionsTypes.GET_SEARCHED_AIRCRAFTS),
+            mergeMap((action:{type:string; payload:{value:string}}) => {
+                return this.aircraftService.getSearchAircraft(action.payload.value).pipe(
                     map((aircrafts) => new GetSearchedAircraftsActionSuccess(aircrafts)),
                     catchError((err) => of(new GetSearchedAircraftsActionError(err.message)))
                 )
             })
     )    
-    )
+    ) 
 };
