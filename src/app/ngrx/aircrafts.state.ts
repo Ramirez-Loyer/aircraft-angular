@@ -1,3 +1,4 @@
+import { EntityState } from "@ngrx/entity";
 import { Aircraft } from "../model/aircraft";
 
 
@@ -8,7 +9,7 @@ export enum AircraftsStateEnum{  //les différents états du state
     INITIAL = "Initial"
 }
 
-export interface AircraftsState {  //structure de notre state
+export interface AircraftsState extends EntityState<Operation> {  //structure de notre state
     aircrafts : Aircraft[],
     errorMessage: string, 
     dataState : AircraftsStateEnum
@@ -18,7 +19,9 @@ export interface AircraftsState {  //structure de notre state
 export const initState : AircraftsState = {
     aircrafts : [],
     errorMessage: "", 
-    dataState : AircraftsStateEnum.INITIAL
+    dataState : AircraftsStateEnum.INITIAL, 
+    ids: [],
+    entities: {}
 }
 
 
