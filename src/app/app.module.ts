@@ -14,6 +14,7 @@ import { AircraftsReducer } from './ngrx/aircrafts.reducer';
 import { AircraftsEffects } from './ngrx/aircrafts.effects';
 import { AlertComponent } from './components/alert/alert.component';
 import { OperationActionsTypes } from './ngrx/aircrafts.action';
+import { LoginComponent } from './login/login/login.component';
 
 
 
@@ -22,7 +23,8 @@ import { OperationActionsTypes } from './ngrx/aircrafts.action';
     AppComponent,
     AircraftsComponent,
     AircraftsNavbarComponent,
-    AlertComponent, 
+    AlertComponent,
+    LoginComponent, 
   
   ],
   imports: [
