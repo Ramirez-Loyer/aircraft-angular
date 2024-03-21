@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   
   }
 
-  constructor(private formBuilder: FormBuilder){};
+  constructor(private formBuilder: FormBuilder, private authService: AuthenticateService){};
 
 myForm = this.formBuilder.group({
   email : ['', Validators.required],
@@ -20,10 +21,10 @@ myForm = this.formBuilder.group({
  })
 
  onLogin(){
+ 
   const {email, password}=this.myForm.value
-
-  console.log(email);
-  console.log(password);
+  const users = this.authService.getUser(email)
+ console.log(users.forEach(user=>console.log(user)))
  };
   
 
