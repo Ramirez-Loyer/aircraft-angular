@@ -1,14 +1,16 @@
 <nav class = "navbar navbar-expand-sm">
     <ul class="navbar navbara-nav">
-        <li>
-            <button class="btn btn-outline-info m2 btn-sm" (click)="getAllAircrafts()">Tous les avions</button>
-            <button class="btn btn-outline-info m2 btn-sm" (click)="getDesignAircrafts()">Avions en étude</button>
-            <button class="btn btn-outline-info m2 btn-sm" (click)="getDevelopmentAircrafts()">Avions en construction </button>
+        <li class="list-group-item active">
+            <button class="btn btn-outline-info m4 btn-sm" (click)="getAllAircrafts()">Tous les avions</button>
+            <button class="btn btn-outline-info m4 btn-sm" (click)="getDesignAircrafts()">Avions en étude</button>
+            <button class="btn btn-outline-info m4 btn-sm" (click)="getDevelopmentAircrafts()">Avions en construction </button>
         </li>
-        <li>
+        <li class="list-group-item active">
             <form [formGroup]="myForm" (ngSubmit)="onSearch(myForm)" >
                 <div class="form-group">
-                    <input type="text" formControlName="searchValue" id="search" /> 
+                 
+                        <input type="text" formControlName="searchValue" id="search"/>
+                   
                     <button type="submit" class="btn btn-outline-info m2">Search</button>
                 </div>
             </form>

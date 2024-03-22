@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { AircraftsState, AircraftsStateEnum, initState } from "./aircrafts.state";
-import { AircraftsActions, AircraftsActionsTypes, OperationActionsTypes } from "./aircrafts.action";
+import { AircraftsActions, AircraftsActionsTypes, OperationActionsTypes, UserActionsTypes } from "./aircrafts.action";
 import { EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { Operation } from "../model/operation";
 
@@ -15,11 +15,21 @@ export const initialState: AircraftsState = adapter.getInitialState({
     errorMessage: "", 
     dataState : AircraftsStateEnum.INITIAL, 
     ids: [],
-    entities: {}
+    entities: {},
+    isLogged: false,
 });
 
 export function AircraftsReducer(state : AircraftsState = initialState, action: Action) : AircraftsState {
     switch(action.type){
+        case UserActionsTypes.USER_LOGIN:
+            return {...state, dataState: AircraftsStateEnum.LOADING };
+
+        case UserActionsTypes.USER_LOGIN_SUCCESS:
+            return {...state, dataState: AircraftsStateEnum.LOADED, isLogged:true };
+    
+            case UserActionsTypes.USER_LOGIN_ERROR:
+                return {...state, dataState: AircraftsStateEnum.ERROR,isLogged:false, errorMessage: (<AircraftsActions>action).payload};
+
         case AircraftsActionsTypes.GET_ALL_AIRCRAFTS:
         //console.log("loading...");
         return {...state, dataState: AircraftsStateEnum.LOADING };

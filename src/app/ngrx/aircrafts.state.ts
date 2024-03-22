@@ -12,7 +12,8 @@ export enum AircraftsStateEnum{  //les différents états du state
 export interface AircraftsState extends EntityState<Operation> {  //structure de notre state
     aircrafts : Aircraft[],
     errorMessage: string, 
-    dataState : AircraftsStateEnum
+    dataState : AircraftsStateEnum,
+    isLogged: boolean
 }
 
 //il est nécessaire de définir l'état initial du state avec des valeurs par défaut
@@ -21,7 +22,8 @@ export const initState : AircraftsState =  {
     errorMessage: "", 
     dataState : AircraftsStateEnum.INITIAL, 
     ids: [],
-    entities: {}
+    entities: {},
+    isLogged : false,
 }
 
 

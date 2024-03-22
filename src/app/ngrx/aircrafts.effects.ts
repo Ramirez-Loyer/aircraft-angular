@@ -3,15 +3,35 @@ import { AircraftService } from "../services/aircraft.service";
 import { Actions, createEffect, ofType} from "@ngrx/effects";
 import { Observable, map, mergeMap, of, catchError } from "rxjs";
 import { Action } from "@ngrx/store";
-import { GetAllAircraftsActionError, GetAllAircraftsActionSuccess, AircraftsActionsTypes, GetDesignedAircraftsAction, GetDesignedAircraftsActionSuccess, GetDesignedAircraftsActionError, GetDevelopmentAircraftsActionSuccess, GetDevelopmentAircraftsActionError, GetSearchedAircraftsActionError, GetSearchedAircraftsActionSuccess } from "./aircrafts.action";
+import { GetAllAircraftsActionError, GetAllAircraftsActionSuccess, AircraftsActionsTypes, GetDesignedAircraftsAction, GetDesignedAircraftsActionSuccess, GetDesignedAircraftsActionError, GetDevelopmentAircraftsActionSuccess, GetDevelopmentAircraftsActionError, GetSearchedAircraftsActionError, GetSearchedAircraftsActionSuccess, UserActionsTypes, UserLoginActionSuccess, UserLoginActionError } from "./aircrafts.action";
+import { AuthenticateService } from "../services/authenticate.service";
+import { User } from "../model/user";
 
 
 @Injectable() //décorateur spécifie qu'il s'agit d'un service
 
 export class AircraftsEffects {
-    constructor(private aircraftService : AircraftService, private effectActions : Actions) {
+    constructor(private aircraftService : AircraftService, private effectActions : Actions, private authService:AuthenticateService) {
 
     }
+
+getUserLogin: Observable<Action> = createEffect(
+    ()=> this.effectActions.pipe(
+        ofType(UserActionsTypes.USER_LOGIN),
+        mergeMap((action: {type: string;payload:User}) => {
+            return this.authService.getUser(action.payload).pipe(
+                map((user)=> {
+                    if(Array.isArray(user) && user.length === 0){
+                        return new UserLoginActionError("Password ou email invalid") 
+                    }else {
+                        return new UserLoginActionSuccess(user)
+                    }
+                }),
+                catchError((err) => of(new UserLoginActionError(err.message)))
+            )
+        })
+    )
+)
 
     getAllAircraftsEffect: Observable<Action> = createEffect(
         () => this.effectActions.pipe(

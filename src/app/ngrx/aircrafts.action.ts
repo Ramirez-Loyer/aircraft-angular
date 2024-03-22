@@ -1,6 +1,7 @@
 import {Action} from "@ngrx/store";
 import { Aircraft } from "../model/aircraft";
 import { Operation } from "../model/operation";
+import { User } from "../model/user";
 
 
 export interface ActionEvent{type:AircraftsActionsTypes; payload:any}
@@ -38,6 +39,26 @@ GET_SEARCHED_AIRCRAFTS_ERROR = '[Aircrafts] Get Serached Aircrafts Error',
 export enum OperationActionsTypes {
     ADD_OPERATION = "[Operation] AddOne",
     REMOVE_OPERATION = "[Operation] RemoveOne"
+}
+
+export enum UserActionsTypes {
+    USER_LOGIN = '[User] Login',
+    USER_LOGIN_SUCCESS = '[User] Login Success',
+    USER_LOGIN_ERROR = '[User] Login Error'
+}
+
+export class UserLoginAction implements Action {
+    type: UserActionsTypes = UserActionsTypes.USER_LOGIN;
+    constructor(public payload:any){}
+}
+export class UserLoginActionSuccess implements Action {
+    type: UserActionsTypes = UserActionsTypes.USER_LOGIN;
+    constructor(public payload:User[]){}
+}
+
+export class UserLoginActionError implements Action {
+    type: UserActionsTypes = UserActionsTypes.USER_LOGIN;
+    constructor(public payload:string){}
 }
 
 /************/
